@@ -9,6 +9,8 @@ services:
     volumes:
       - ./credentials.json:/home/nadeko/app/credentials.json:ro
       - nadeko-data:/home/nadeko/app/data
+      # Underscore to prevent accidental deletion
+      - _nadeko-db:/home/nadeko/app/db/
     environment:
       NadekoBot_RedisOptions: redis,name=nadeko
       NadekoBot_ShardRunCommand: dotnet
@@ -21,3 +23,4 @@ services:
 
 volumes:
   nadeko-data:
+  _nadeko-db:

@@ -44,6 +44,8 @@ RUN set -ex; \
 
 WORKDIR /home/nadeko/app
 
+RUN mkdir /home/nadeko/app/db/ && touch /home/nadeko/app/db/NadekoBot.db
+
 COPY data-init.sh .
 RUN ["./data-init.sh"]
 
