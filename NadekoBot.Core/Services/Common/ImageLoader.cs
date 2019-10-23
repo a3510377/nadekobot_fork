@@ -36,7 +36,14 @@ namespace NadekoBot.Core.Services.Common
             {
                 try
                 {
-                    var bytes = await File.ReadAllBytesAsync(uri.LocalPath);
+                    // Resolve the path relative to the data directory. file://
+                    // URIs don't actually support relative paths, so LocalPath
+                    // comes out as an absolute path. To fix this, we cheekily
+                    // append a ./ so that it turns into a relative path.
+                    String relativePath = "./" + uri.LocalPath;
+                    String basePath = Path.Combine(Environment.CurrentDirectory, "data");
+                    String imagePath = Path.GetFullPath(relativePath, basePath);
+                    var bytes = await File.ReadAllBytesAsync(imagePath);
                     return bytes;
                 }
                 catch (Exception ex)
